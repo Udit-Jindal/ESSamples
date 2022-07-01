@@ -1,0 +1,13 @@
+public static RestClient apiAuth(String host, int port, String apiKeyId, String apiKeySecret)
+{
+  String apiKeyAuth = Base64.getEncoder().encodeToString((apiKeyId + ":" + apiKeySecret).getBytes(StandardCharsets.UTF_8));
+
+  Header[] defaultHeaders = new Header[]
+  {
+    new BasicHeader("Authorization", "ApiKey " + apiKeyAuth)
+  };
+
+  RestClientBuilder restClientBuilder = RestClient.builder(new HttpHost(host, port, "https"));
+
+  return restClientBuilder.setDefaultHeaders(defaultHeaders).build();
+}
